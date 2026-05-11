@@ -1,0 +1,13 @@
+# robots.txt — Écurie du Bodoage
+# https://www.ecurie-du-bodoage.fr/
+
+User-agent: *
+Allow: /
+
+# Bloquer les fichiers techniques
+Disallow: /assets/js/
+Disallow: /config.js
+Disallow: /CLAUDE.md
+
+# Sitemap
+Sitemap: https://www.ecurie-du-bodoage.fr/sitemap.xml

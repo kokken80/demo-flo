@@ -1,0 +1,1095 @@
+/*
+ * style.css — Écurie du Bodoage
+ * ─────────────────────────────────────────────────────────────
+ * Table des matières :
+ *  1. Variables & Reset
+ *  2. Typographie
+ *  3. Utilitaires
+ *  4. Navigation
+ *  5. Hero
+ *  6. Sections génériques
+ *  7. Composants (cards, tarifs, features...)
+ *  8. Stats bar
+ *  9. Galerie
+ * 10. Formulaire contact
+ * 11. Footer
+ * 12. Pages spécifiques
+ * 13. Responsive
+ * ─────────────────────────────────────────────────────────────
+ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. Variables & Reset
+   ─────────────────────────────────────────────────────────────
+   Palette dérivée du logo Écurie du Bodoage :
+   - Rose magenta (cheval du logo)        → couleur d'accent
+   - Bleu nuit / anthracite (texte logo)  → couleur principale
+   - Crème / blanc cassé                  → fonds chaleureux
+   - Vert sauge                           → tourisme équestre / nature
+───────────────────────────────────────────────────────────── */
+:root {
+  /* Couleurs de marque (issues du logo) */
+  --color-brand:        #d8246d;   /* rose magenta principal */
+  --color-brand-dark:   #b51d5a;   /* rose hover / actif */
+  --color-brand-soft:   #f9e1eb;   /* rose pâle de fond */
+
+  /* Couleurs neutres (texte logo) */
+  --color-ink:          #2d3142;   /* bleu nuit du texte logo */
+  --color-ink-soft:     #4a4f63;   /* texte secondaire */
+  --color-ink-light:    #6b7088;   /* texte tertiaire */
+
+  /* Aliases conservés pour compatibilité (nom historique → nouvelle valeur) */
+  --color-brown:        var(--color-ink);          /* anciennement marron */
+  --color-brown2:       var(--color-ink-soft);
+  --color-gold:         var(--color-brand);        /* anciennement doré → rose */
+  --color-gold2:        var(--color-brand-dark);
+  --color-text:         var(--color-ink);
+  --color-text2:        var(--color-ink-soft);
+
+  /* Fonds */
+  --color-cream:        #fbf7f2;
+  --color-sand:         #f4ece2;
+  --color-white:        #ffffff;
+  --color-border:       #e8dfd3;
+
+  /* Couleurs sections sombres (tourisme équestre, élevage) */
+  --color-green:        #1f2335;   /* bleu nuit profond (au lieu du vert) */
+  --color-green2:       #2d3142;   /* bleu nuit de base */
+
+  /* Typographie */
+  --font-serif:  'Playfair Display', Georgia, serif;
+  --font-sans:   'Lato', system-ui, sans-serif;
+
+  /* Espacements */
+  --space-xs:  .5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  6rem;
+
+  /* UI */
+  --radius:    4px;
+  --shadow-sm: 0 2px 10px rgba(45,49,66,.08);
+  --shadow-md: 0 6px 24px rgba(45,49,66,.14);
+
+  --nav-height: 64px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-text);
+  background: var(--color-white);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+  transition: color .2s;
+}
+a:hover { color: var(--color-brown); }
+
+ul { list-style: none; }
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. Typographie
+───────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  line-height: 1.12;
+  color: var(--color-brown);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 600; }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 600; }
+h4 { font-size: 1.05rem; font-weight: 600; }
+
+p { margin-bottom: var(--space-sm); }
+p:last-child { margin-bottom: 0; }
+
+.label {
+  display: block;
+  font-size: .7rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. Utilitaires
+───────────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.section { padding: var(--space-lg) 5%; }
+.section--cream  { background: var(--color-cream); }
+.section--sand   { background: var(--color-sand); }
+.section--white  { background: var(--color-white); }
+.section--dark   { background: var(--color-brown); color: var(--color-white); }
+.section--green  {
+  background: linear-gradient(135deg, var(--color-green) 0%, var(--color-green2) 100%);
+  color: var(--color-white);
+}
+.section--green h1,
+.section--green h2,
+.section--green h3 { color: var(--color-white); }
+.section--green .label { color: var(--color-brand-soft); }
+.section--green p  { color: rgba(255,255,255,.78); }
+
+.text-center { text-align: center; }
+.text-center .section__sub { margin: 0 auto var(--space-md); }
+
+.section__sub {
+  color: var(--color-text2);
+  font-weight: 300;
+  max-width: 600px;
+  margin-bottom: var(--space-md);
+  font-size: .95rem;
+}
+
+/* Grilles */
+.grid--3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.grid--2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+/* Boutons */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  font-family: var(--font-sans);
+  font-size: .83rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  text-decoration: none;
+}
+.btn:hover { opacity: .88; transform: translateY(-1px); }
+
+.btn--gold   { background: var(--color-gold);   color: var(--color-white); }
+.btn--brown  { background: var(--color-brown);  color: var(--color-white); }
+.btn--outline {
+  background: transparent;
+  border: 2px solid var(--color-brown);
+  color: var(--color-brown);
+  padding: 10px 26px;
+}
+.btn--outline-white {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.55);
+  color: var(--color-white);
+  padding: 10px 26px;
+}
+.btn--outline-white:hover { border-color: var(--color-gold2); color: var(--color-gold2); opacity: 1; }
+
+/* Breadcrumb */
+.breadcrumb {
+  background: var(--color-sand);
+  padding: 10px 5%;
+  font-size: .8rem;
+  color: var(--color-text2);
+}
+.breadcrumb a { color: var(--color-gold); }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb__sep { margin: 0 .4rem; }
+
+
+/* ─────────────────────────────────────────────────────────────
+   4. Navigation
+───────────────────────────────────────────────────────────── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-brown);
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  box-shadow: 0 2px 14px rgba(0,0,0,.3);
+}
+
+.site-nav__logo {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-gold2);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-nav__logo:hover { color: var(--color-gold2); opacity: .9; }
+
+.site-nav__menu {
+  display: flex;
+  gap: 1.6rem;
+}
+.site-nav__menu a {
+  font-size: .82rem;
+  letter-spacing: .05em;
+  color: rgba(255,255,255,.82);
+  font-weight: 400;
+}
+.site-nav__menu a:hover,
+.site-nav__menu a[aria-current="page"] {
+  color: var(--color-gold2);
+}
+
+.site-nav__cta {
+  background: var(--color-gold);
+  color: var(--color-white) !important;
+  padding: 9px 20px;
+  border-radius: var(--radius);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.site-nav__cta:hover { opacity: .88; }
+
+/* Hamburger (mobile) */
+.site-nav__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.site-nav__toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-gold2);
+}
+
+/* Mobile nav open */
+@media (max-width: 800px) {
+  .site-nav__menu {
+    display: none;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0; right: 0;
+    background: var(--color-brown);
+    flex-direction: column;
+    padding: 1rem 5% 1.5rem;
+    gap: .8rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+  }
+  .site-nav__menu.is-open { display: flex; }
+  .site-nav__cta { display: none; }
+  .site-nav__toggle { display: flex; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   5. Hero
+───────────────────────────────────────────────────────────── */
+.hero {
+  background:
+    linear-gradient(rgba(15,8,2,.6), rgba(20,10,3,.55)),
+    linear-gradient(135deg, #243d18 0%, #0a1806 100%);
+  background-size: cover;
+  background-position: center;
+  padding: 90px 5% 80px;
+  text-align: center;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  min-height: 440px;
+  justify-content: center;
+}
+
+.hero__eyebrow {
+  font-size: .72rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--color-brand-soft);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+}
+
+.hero h1 {
+  color: var(--color-white);
+  max-width: 720px;
+}
+.hero h1 em { color: var(--color-gold2); font-style: italic; }
+
+.hero__sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,.78);
+  max-width: 520px;
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.hero__btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+/* Hero sous-pages */
+.hero--page {
+  padding: 60px 5%;
+  min-height: 240px;
+}
+.hero--page h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+
+
+/* ─────────────────────────────────────────────────────────────
+   6. Sections génériques
+───────────────────────────────────────────────────────────── */
+/* Bandeau CTA intermédiaire */
+.cta-band {
+  background: var(--color-cream);
+  border-top: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
+  padding: 36px 5%;
+}
+.cta-band__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.cta-band h2 { font-size: 1.3rem; margin-bottom: 4px; }
+.cta-band p  { font-size: .9rem; color: var(--color-text2); margin: 0; font-weight: 300; }
+
+/* Stats bar */
+.stats-bar { background: var(--color-brown); padding: 44px 5%; }
+.stats-bar__grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+.stats-bar__num {
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  color: var(--color-gold2);
+  font-weight: 700;
+  line-height: 1;
+}
+.stats-bar__label {
+  font-size: .82rem;
+  color: rgba(255,255,255,.62);
+  margin-top: .3rem;
+  font-weight: 300;
+}
+
+/* Section "Voir aussi" — liens transversaux */
+.see-also { }
+.see-also__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   7. Composants
+───────────────────────────────────────────────────────────── */
+
+/* Card activité */
+.activity-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 28px 22px;
+  background: var(--color-white);
+  transition: box-shadow .2s, border-color .2s;
+}
+.activity-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-gold);
+}
+.activity-card__icon { font-size: 1.9rem; margin-bottom: 10px; }
+.activity-card h3   { font-size: 1.1rem; margin-bottom: 6px; }
+.activity-card p    { font-size: .87rem; color: var(--color-text2); }
+.activity-card__price {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: .8rem;
+  color: var(--color-gold);
+  font-weight: 700;
+}
+
+/* Card "Voir aussi" */
+.link-card {
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow .2s, border-color .2s, transform .15s;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+.link-card:hover {
+  border-color: var(--color-gold);
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.link-card__icon { font-size: 1.6rem; margin-bottom: 8px; }
+.link-card h3    { font-size: 1rem; margin-bottom: 5px; }
+.link-card p     { font-size: .82rem; color: var(--color-text2); margin: 0; }
+.link-card__arrow { display: block; margin-top: 8px; color: var(--color-gold); font-size: .82rem; font-weight: 700; }
+
+/* Tableau tarifs */
+.tarif-box {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.1);
+}
+.tarif-box--light {
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+}
+.tarif-box__head {
+  background: var(--color-brown);
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+}
+.tarif-box__head span { color: var(--color-white); font-size: .82rem; font-weight: 700; }
+
+.tarif-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  font-size: .88rem;
+}
+.tarif-box--light .tarif-row { border-color: var(--color-border); }
+.tarif-row:last-child { border-bottom: none; }
+.tarif-row__name  { color: rgba(255,255,255,.88); }
+.tarif-box--light .tarif-row__name { color: var(--color-text); }
+.tarif-row__price { color: var(--color-gold2); font-weight: 700; font-size: .85rem; white-space: nowrap; }
+
+/* Features list */
+.feature-list { margin: var(--space-sm) 0 var(--space-md); }
+.feature-list li {
+  display: flex;
+  gap: 10px;
+  font-size: .9rem;
+  line-height: 1.55;
+  padding: 5px 0;
+  color: rgba(255,255,255,.85);
+}
+.feature-list li::before {
+  content: "✓";
+  color: var(--color-brand-soft);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.feature-list--dark li { color: var(--color-text2); }
+.feature-list--dark li::before { color: var(--color-gold); }
+
+/* Infos contact */
+.contact-info { display: flex; flex-direction: column; gap: 20px; }
+.contact-info__item { display: flex; gap: 14px; align-items: flex-start; }
+.contact-info__icon {
+  width: 38px; height: 38px;
+  background: var(--color-brown);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem; flex-shrink: 0;
+}
+.contact-info__label {
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+.contact-info__value { font-size: .9rem; line-height: 1.5; }
+
+/* Hébergement row */
+.heberg-item {
+  display: flex;
+  gap: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 18px;
+  background: var(--color-white);
+  align-items: flex-start;
+  transition: border-color .2s;
+}
+.heberg-item:hover { border-color: var(--color-gold); }
+.heberg-item__icon { font-size: 1.7rem; flex-shrink: 0; }
+.heberg-item h3    { font-size: 1rem; margin-bottom: 3px; }
+.heberg-item p     { font-size: .83rem; color: var(--color-text2); margin: 0; }
+.heberg-item__price { font-size: .8rem; color: var(--color-gold); font-weight: 700; display: block; margin-top: 4px; }
+
+/* Horse card */
+.horse-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-white);
+  transition: transform .2s, box-shadow .2s;
+}
+.horse-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.horse-card__img {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  position: relative;
+}
+.horse-card__img--bay      { background: linear-gradient(135deg, #c8a050, #7a5020); }
+.horse-card__img--dark     { background: linear-gradient(135deg, #4a3828, #1e1810); }
+.horse-card__img--chestnut { background: linear-gradient(135deg, #9c5828, #5a2e10); }
+.horse-card__badge {
+  position: absolute; top: 10px; right: 10px;
+  background: var(--color-gold); color: var(--color-white);
+  font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 2px;
+}
+.horse-card__body { padding: 16px 18px; }
+.horse-card h3    { font-size: 1.1rem; margin-bottom: 4px; }
+.horse-card__meta { font-size: .8rem; color: var(--color-text2); line-height: 1.55; margin-bottom: 8px; }
+.horse-card__price { font-size: 1.05rem; color: var(--color-gold); font-weight: 700; }
+.horse-card__btn {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: .75rem;
+  color: var(--color-brown);
+  border: 1px solid var(--color-border);
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  transition: border-color .2s, color .2s;
+  text-decoration: none;
+}
+.horse-card__btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+/* Galerie */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.gallery__item {
+  aspect-ratio: 4/3;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.gallery__item:first-child { grid-column: span 2; }
+.gallery__item:hover .gallery__placeholder { transform: scale(1.04); }
+.gallery__item .gallery__placeholder { transition: transform .4s; }
+.gallery__item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .4s;
+}
+.gallery__item:hover img { transform: scale(1.04); }
+
+/* Placeholder galerie (avant photos réelles) */
+.gallery__placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.4rem;
+}
+.gallery__placeholder--1 { background: linear-gradient(135deg, #3a6028, #1c3a10); }
+.gallery__placeholder--2 { background: linear-gradient(135deg, #5a3818, #301808); }
+.gallery__placeholder--3 { background: linear-gradient(135deg, #4a3825, #261810); }
+.gallery__placeholder--4 { background: linear-gradient(135deg, #285018, #14300a); }
+.gallery__label {
+  position: absolute; bottom: 8px; left: 10px;
+  font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+}
+
+/* Map placeholder */
+.map-placeholder {
+  background: linear-gradient(135deg, #e8dfd3, #c9b9a3);
+  border-radius: var(--radius);
+  height: 170px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px;
+  color: rgba(20,40,10,.5);
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-top: var(--space-md);
+}
+.map-placeholder::before { content: "📍"; font-size: 1.6rem; opacity: .6; }
+
+
+/* ─────────────────────────────────────────────────────────────
+   10. Formulaire contact
+───────────────────────────────────────────────────────────── */
+.contact-form {
+  background: var(--color-cream);
+  border-radius: var(--radius);
+  padding: 36px;
+  border: 1px solid var(--color-border);
+}
+.contact-form__title { font-size: 1.25rem; margin-bottom: 1.2rem; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 13px; }
+.form-group label {
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-brown2);
+  font-weight: 700;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  border: 1px solid var(--color-border);
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: .9rem;
+  border-radius: var(--radius);
+  outline: none;
+  background: var(--color-white);
+  color: var(--color-text);
+  transition: border-color .2s;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { border-color: var(--color-gold); }
+.form-group textarea { min-height: 100px; resize: vertical; }
+
+.form-note {
+  font-size: .75rem;
+  color: var(--color-text2);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   11. Footer
+───────────────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--color-brown);
+  color: rgba(255,255,255,.65);
+  padding: 52px 5% 24px;
+}
+.site-footer__grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 32px;
+}
+.site-footer__logo {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-gold2);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
+}
+.site-footer__desc { font-size: .84rem; line-height: 1.65; }
+.site-footer__social { display: flex; gap: 12px; margin-top: 14px; }
+.site-footer__social a { font-size: .82rem; color: var(--color-gold2); }
+
+.site-footer__col h4 {
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.site-footer__col ul { display: flex; flex-direction: column; gap: 7px; }
+.site-footer__col a  { font-size: .84rem; color: rgba(255,255,255,.6); }
+.site-footer__col a:hover { color: var(--color-gold2); }
+
+.site-footer__bottom {
+  max-width: 1100px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  font-size: .74rem;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   13. Responsive
+───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .grid--3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 800px) {
+  .grid--3,
+  .grid--2,
+  .stats-bar__grid,
+  .see-also__grid,
+  .site-footer__grid { grid-template-columns: 1fr; }
+
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .gallery__item:first-child { grid-column: span 1; }
+
+  .form-row { grid-template-columns: 1fr; }
+
+  .cta-band__inner { flex-direction: column; text-align: center; }
+
+  .hero { padding: 60px 5%; min-height: 320px; }
+}
+
+@media (max-width: 480px) {
+  .grid--3 { grid-template-columns: 1fr; }
+  .hero__btns { flex-direction: column; align-items: center; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   14. Logo (image dans nav + footer)
+───────────────────────────────────────────────────────────── */
+.site-nav__logo,
+.site-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.site-nav__logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+.site-footer__logo-img {
+  height: 56px;
+  width: auto;
+  display: block;
+  margin-bottom: 12px;
+}
+.site-nav__logo-text {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-brand);
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   15. Responsive — TABLETTE (≥ 600px)
+   Ajustements pour tablettes en portrait (iPad Mini, etc.)
+───────────────────────────────────────────────────────────── */
+@media (min-width: 600px) and (max-width: 900px) {
+  .grid--2 {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .stats-bar__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .see-also__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .site-footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .site-footer__grid > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .hero {
+    min-height: 380px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   16. Responsive — TRÈS PETITS ÉCRANS / Galaxy Fold (≤ 360px)
+   Le Galaxy Fold replié fait 280-320px de large
+───────────────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  :root {
+    --nav-height: 56px;
+  }
+
+  body { font-size: 15px; }
+
+  .site-nav { padding: 0 4%; }
+  .site-nav__logo-img { height: 32px; }
+  .site-nav__logo-text { font-size: .95rem; }
+
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.05rem; }
+
+  .section { padding: var(--space-md) 4%; }
+  .container { padding: 0 4%; }
+
+  .hero {
+    padding: 50px 4%;
+    min-height: 260px;
+  }
+  .hero__sub { font-size: .9rem; }
+
+  .btn {
+    padding: 11px 18px;
+    font-size: .76rem;
+    width: 100%;
+    text-align: center;
+  }
+  .hero__btns {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .activity-card { padding: 20px 16px; }
+  .activity-card h3 { font-size: 1rem; }
+
+  .tarif-row {
+    padding: 11px 12px;
+    font-size: .82rem;
+  }
+  .tarif-row__price { font-size: .78rem; }
+
+  .horse-card__body { padding: 14px 14px; }
+
+  .stats-bar { padding: 32px 4%; }
+  .stats-bar__num { font-size: 2rem; }
+
+  .contact-form { padding: 22px 18px; }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 9px 12px;
+    font-size: .88rem;
+  }
+
+  .site-footer { padding: 36px 4% 20px; }
+  .site-footer__logo-img { height: 44px; }
+
+  .breadcrumb { font-size: .72rem; padding: 8px 4%; }
+
+  .cta-band { padding: 24px 4%; }
+  .cta-band h2 { font-size: 1.1rem; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   17. Responsive — Galaxy Fold replié (≤ 320px)
+───────────────────────────────────────────────────────────── */
+@media (max-width: 320px) {
+  body { font-size: 14px; }
+  .site-nav__logo-text { display: none; } /* Garde uniquement l'image */
+  .hero h1 { font-size: 1.4rem; }
+  .section { padding: 1.5rem 4%; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   18. Icônes réseaux sociaux (footer + contact)
+   - Par défaut : couleur ink (bleu nuit) → visible sur fond clair
+   - Survol : couleur brand (rose magenta)
+   - Dans le footer (fond foncé) : couleur blanche
+───────────────────────────────────────────────────────────── */
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  font-weight: 500;
+}
+.social-icon img {
+  width: 20px;
+  height: 20px;
+  display: block;
+  /* Filtre par défaut : couleur ink (#2d3142) */
+  filter: brightness(0) saturate(100%) invert(18%) sepia(10%) saturate(940%) hue-rotate(195deg) brightness(95%) contrast(85%);
+  transition: filter .2s, transform .2s;
+}
+.social-icon:hover img {
+  /* Survol : rose magenta brand (#d8246d) */
+  filter: brightness(0) saturate(100%) invert(35%) sepia(85%) saturate(2400%) hue-rotate(310deg) brightness(95%);
+  transform: scale(1.1);
+}
+
+/* Override : icônes dans le footer (fond foncé) → blanches */
+.site-footer .social-icon img {
+  filter: brightness(0) invert(1) opacity(.75);
+}
+.site-footer .social-icon:hover img {
+  filter: brightness(0) saturate(100%) invert(35%) sepia(85%) saturate(2400%) hue-rotate(310deg) brightness(95%);
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   19. Galerie featured — Gîte + Infrastructures prioritaires
+───────────────────────────────────────────────────────────── */
+.gallery--featured {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+}
+.gallery--featured .gallery__item {
+  aspect-ratio: 4/3;
+}
+.gallery--featured .gallery__item--hero {
+  grid-column: span 3; /* Les 2 premières prennent 3 colonnes chacune (donc moitié de la largeur) */
+}
+.gallery--featured .gallery__item:not(.gallery__item--hero) {
+  grid-column: span 2; /* Les 3 suivantes prennent 2 colonnes chacune (un tiers chacune) */
+  aspect-ratio: 4/3;
+}
+/* ↪ Important : annule la règle :first-child globale pour cette galerie */
+.gallery--featured .gallery__item:first-child { grid-column: span 3; }
+
+@media (max-width: 800px) {
+  .gallery--featured { grid-template-columns: repeat(2, 1fr); }
+  .gallery--featured .gallery__item--hero,
+  .gallery--featured .gallery__item:not(.gallery__item--hero),
+  .gallery--featured .gallery__item:first-child {
+    grid-column: span 1;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   20. Responsive amélioré — Mobile (≤ 600px)
+   - Page hébergement (Gîte / Tiny house : photo + texte en grid)
+   - Limitation hauteur photos sur mobile
+   - Compactage boutons et paddings
+───────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  /* Hébergement : Gîte mis en avant — passer la grid 2 cols en 1 col */
+  .heberg-item--featured > div {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .heberg-item--featured .gallery__placeholder {
+    height: 180px !important; /* limiter hauteur photo gîte sur mobile */
+  }
+
+  /* Tiny house : grid 1fr 2fr → 1 colonne */
+  .heberg-item--with-photo {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 14px !important;
+  }
+  .heberg-item--with-photo .gallery__placeholder {
+    height: 160px !important;
+  }
+
+  /* Extras (petit-déj, balade) — déjà gérés par .grid--2 → 1fr en mobile */
+  .heberg-item--extra .heberg-item__icon {
+    font-size: 1.8rem;
+  }
+
+  /* Section infrastructures (page pension) : photos preuves plus petites */
+  .container img[style*="max-width:340px"],
+  .container img[style*="max-width:300px"] {
+    max-width: 100% !important;
+  }
+
+  /* Hero sur mobile : padding réduit */
+  .hero {
+    padding: 40px 5% !important;
+  }
+  .hero h1 {
+    font-size: 1.7rem !important;
+  }
+  .hero__sub {
+    font-size: .9rem;
+  }
+
+  /* Boutons sur mobile : largeur auto, plus compacts */
+  .btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 18px;
+    font-size: .82rem;
+  }
+
+  /* Galerie accueil : sur mobile, tout en 1 colonne avec hauteur réduite */
+  .gallery--featured .gallery__item {
+    aspect-ratio: 4/3 !important;
+  }
+
+  /* Carte Google Maps : hauteur réduite */
+  iframe[title*="Google Maps"] {
+    height: 220px !important;
+  }
+
+  /* Cards d'infrastructure (page pension) : 1 colonne au lieu de 3 */
+  .section--white .grid--3 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* Affinage pour très petits écrans (≤ 360px) */
+@media (max-width: 360px) {
+  .heberg-item--featured .gallery__placeholder,
+  .heberg-item--with-photo .gallery__placeholder {
+    height: 140px !important;
+  }
+  .heberg-item {
+    padding: 12px !important;
+  }
+}
